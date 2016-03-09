@@ -1,4 +1,6 @@
-import java.io.File;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Notice:
@@ -29,7 +31,44 @@ public class ProgramTest {
 	 */
 	public static void test(File inputFile, File outputFile, File tempFile) throws Exception {
 		//TODO ====================== YOUR CODE HERE ======================
+		inputFile = new File("H:\\git\\rep\\TESTJ\\src\\test\\resources\\input.data");
+		outputFile = new File("H:\\git\\rep\\TESTJ\\src\\test\\resources\\output.data");
 
+		BufferedReader bi = new BufferedReader(new FileReader(inputFile));
+		BufferedWriter bo = new BufferedWriter(new FileWriter(outputFile));
+		String line = bi.readLine();
+		List<String> all = new ArrayList<String>();
+		while (line!=null){
+			all.add(line);
+			line = bi.readLine();
+		}
+		for (int j = 0; j < all.size() - 1; j++) {
+			for (int k = j+1; k < all.size(); k++) {
+				String key2 = null;
+				String key1 = all.get(j).split("\\,")[0];
+				try{
+					key2 = all.get(k).split("\\,")[0];
+				}
+				catch (Exception e){
+					System.out.println("key1:"+key1+" key2:"+key2+" k:"+k);
+				}
+
+				if (key1.compareTo(key2)>0){
+					if (key1 == null){
+						System.out.println("key1:"+key1+"--"+k);
+					}
+					String temp = all.get(j);
+					all.set(j,all.get(k));
+					all.set(k,temp);
+				}
+			}
+		}
+		for (String s:all) {
+			bo.append(s+"\n");
+		}
+		bo.flush();
+		bo.close();
+		bi.close();
 
 		//=================================================================
 	}
@@ -37,6 +76,8 @@ public class ProgramTest {
 	
 	//TODO ====================== YOUR CODE HERE (You can add private method if need) ======================
 	
-	
+	public static void main(String args[]) throws Exception {
+		test(null,null,null);
+	}
 	//=================================================================
 }
